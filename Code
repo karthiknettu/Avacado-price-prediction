@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
+from sklearn.preprocessing import StandardScaler
+data = pd.read_csv("/content/Avocado2.csv")
+print(data.isnull().sum())
+x = data.drop(['AveragePrice'], axis=1)
+y = data['AveragePrice']
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=42)  # Use an integer random_state
+lin_reg_model = LinearRegression()
+reg = lin_reg_model.fit(x_train, y_train)
+w = reg.score(x_test, y_test)
+reg_train_score = reg.score(x_train, y_train)
+train_prediction = lin_reg_model.predict(x_train)
+error_score = metrics.r2_score(y_train, train_prediction)
+print("Linear Regression R-squared:", w)
+print("Linear Regression Training R-squared:", reg_train_score)
+print("Linear Regression Training Error Score:", error_score)
+lasso_reg = Lasso(alpha=50, max_iter=100, tol=0.1)
+lasso_reg.fit(x_train, y_train)
+j = lasso_reg.score(x_test, y_test)
+trainl_prediction = lasso_reg.predict(x_train)
+error2_score = metrics.r2_score(y_train, trainl_prediction)
+print("Lasso Regression R-squared:", j)
+print("Lasso Regression Training R-squared:", jj)
+print("Lasso Regression Training Error Score:", error2_score)
+ridge_reg = Ridge(alpha=50, max_iter=100, tol=0.1)
+ridge_reg.fit(x_train, y_train)
+trainr_prediction = ridge_reg.predict(x_train)
+error_scorer = metrics.r2_score(y_train, trainr_prediction)
+print("Ridge Regression R-squared:", ll)
+print("Ridge Regression Training R-squared:", ff)
+print("Ridge Regression Training Error Score:", error_scorer)
